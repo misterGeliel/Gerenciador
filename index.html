@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+
+        #titulo {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <h1>Lista de Tarefas</h1>
+
+    <form id="form">
+        <label for="tituloTarefa">Título da Tarefa:</label>
+        <input type="text" id="tituloTarefa" name="tituloTarefa" required>
+
+        <label for="descricaoTarefa">Descrição da Tarefa:</label>
+        <textarea id="descricaoTarefa" name="descricaoTarefa" rows="5" required></textarea>
+
+        <button type="button" onclick="adicionarTarefa()">Adicionar Tarefa</button>
+    </form>
+
+    <table id="tabelaTarefas">
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Descrição</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            </tbody>
+    </table>
+</div>
+
+<script>
+    function adicionarTarefa() {
+        const tituloTarefa = document.getElementById('tituloTarefa').value;
+        const descricaoTarefa = document.getElementById('descricaoTarefa').value;
+
+        if (tituloTarefa && descricaoTarefa) {
+            const tabela = document.getElementById('tabelaTarefas').getElementsByTagName('tbody')[0];
+            const linha = tabela.insertRow();
+
+            const celulaTitulo = linha.insertCell();
+            const celulaDescricao = linha.insertCell();
+            const celulaAcao = linha.insertCell();
+
+            celulaTitulo.textContent = tituloTarefa;
+            celulaDescricao.textContent = descricaoTarefa;
+
+            const botaoExcluir = document.createElement('button');
+            botaoExcluir.textContent = 'Excluir';
+            botaoExcluir.onclick = function() {
+                linha.parentNode.removeChild(linha);
+            };
+
+            celulaAcao.appendChild(botaoExcluir);
+
+            document.getElementById('tituloTarefa').value = '';
+            document.getElementById('descricaoTarefa').value = '';
+        } else {
+            alert('Preencha todos os campos!');
+        }
+    }
+</script>
+</body>
+</html>
